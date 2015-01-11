@@ -1,0 +1,11 @@
+  <template name="mainLayout">
+      <div class="container">
+        {{> header}}
+          <div id="edit" class="row-fluid">
+              {{> yield region="header" }}
+          </div>
+          <div id="main" class="row-fluid">
+            {{> yield}}
+          </div>
+      </div>
+  </template>

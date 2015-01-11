@@ -1,0 +1,11 @@
+<template name = "hubItem">
+    <div class="hub">
+        <div class="hub-content">
+            <h3>{{name}}</h3>
+            <p>{{description}}&nbsp;</p>
+            <p class = "hub-footer">
+                Last activity on {{lastModifiedFormattedDate}} | Owner {{{ownerUser}}} | {{#if ownHub}} <a href="#">Edit</a> | <a href="#" class="text-danger delete">Delete</a>{{/if}}
+            </p>
+        </div>
+    </div>
+</template>

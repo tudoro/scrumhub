@@ -1,0 +1,11 @@
+<template name = "hubsListHeader">
+    <div class="row-fluid hubs-header">
+        <button type="button" class="btn-xs btn-primary add-hub">Add new</button>
+        <button type="button" class="btn-xs {{filterClass 'all'}} pull-right filter-all">
+            All <span class="badge">{{hubsCount 'all'}}</span>
+        </button>
+        <button type="button" class="btn-xs {{filterClass 'mine'}} pull-right filter-mine">
+            Mine <span class="badge">{{hubsCount 'mine'}}</span>
+        </button>
+    </div>
+</template>

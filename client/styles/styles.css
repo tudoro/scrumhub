@@ -1,0 +1,94 @@
+body {
+    background: #eee;
+    color: #666666;
+}
+.hub {
+    background: #ffffff;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    -ms-border-radius: 3px;
+    -o-border-radius: 3px;
+    border-radius: 3px;
+    padding: 10px;
+    margin-bottom: 10px;
+    -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.15);
+    -moz-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.15);
+}
+.hub {
+    /* For modern browsers */
+    /* For IE 6/7 (trigger hasLayout) */
+    *zoom: 1;
+    position: relative;
+    opacity: 1;
+}
+.hub:before, .hub:after {
+    content: "";
+    display: table;
+}
+.hub:after {
+    clear: both;
+}
+.hub.invisible {
+    opacity: 0;
+}
+.hub.instant {
+    -webkit-transition: none;
+    -moz-transition: none;
+    -o-transition: none;
+    transition: none;
+}
+.hub.animate {
+    -webkit-transition: all 300ms 0ms;
+    -webkit-transition-delay: ease-in;
+    -moz-transition: all 300ms 0ms ease-in;
+    -o-transition: all 300ms 0ms ease-in;
+    transition: all 300ms 0ms ease-in;
+}
+.hub .hub-content {
+    float: left;
+    width:100%;
+}
+.hub .hub-content h3 {
+    margin: 0;
+    line-height: 1.4;
+    font-size: 18px;
+}
+.hub .hub-content h3 a {
+    display: inline-block;
+    margin-right: 5px;
+}
+.hub .hub-content h3 span {
+    font-weight: normal;
+    font-size: 14px;
+    display: inline-block;
+    color: #aaaaaa;
+}
+.hub .hub-content p {
+    margin: 0;
+}
+.app-header {
+    background-color: #3F51B5;
+    color: #ffffff;
+    margin-bottom:10px;
+}
+.app-header a.navbar-brand {
+    color: #ffffff ;
+}
+.app-header a.navbar-brand:hover {
+    color: #5CD8D2;
+    cursor: pointer;
+}
+.login-area a.dropdown-toggle {
+    color: #ffffff !important;
+    background-color: #3F51B5 !important;
+}
+.login-area li {
+    background-color: #3F51B5 !important;
+}
+.hub-footer {
+    color: #a9a9a9;
+}
+.hubs-header {
+    margin-bottom: 5px;
+}
