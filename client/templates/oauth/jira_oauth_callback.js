@@ -28,8 +28,16 @@ Template.jiraOauthCallback.helpers({
 
 });
 
+Template.jiraOauthCallback.events({
+    "click #doFirstOauth": function() {
+        Meteor.call('connectors_jira_filter', function(error, result) {
+            console.log(result);
+        });
+    }
+});
+
 Template.jiraOauthCallback.rendered = function() {
-    Meteor.call('finishOauth', this.data.oauth_token, this.data.oauth_verifier, function(error, result) {
+    Meteor.call('finishOAuth', this.data.oauth_verifier, function(error, result) {
         if (result === true) {
             Session.set("jiraOauthCallbackOauthStatus", true);
         }
