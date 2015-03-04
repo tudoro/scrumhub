@@ -4,7 +4,14 @@
             <h3>{{name}}</h3>
             <p>{{description}}&nbsp;</p>
             <p class = "hub-footer">
-                Last activity on {{lastModifiedFormattedDate}} | Owner {{{ownerUser}}} | {{#if ownHub}} <a href="#">Edit</a> | <a href="#" class="text-danger delete">Delete</a>{{/if}}
+                Last activity on {{lastModifiedFormattedDate}} |
+                {{#if canJoin}}
+                    <a href="{{pathFor 'hubActivity'}}">Join</a> |
+                {{/if}}
+                {{#if ownHub}}
+                    <a href="{{pathFor 'configureHubParticipants'}}">Configure</a> |
+                    <a href="#" class="text-danger delete">Delete</a>
+                {{/if}}
             </p>
         </div>
     </div>

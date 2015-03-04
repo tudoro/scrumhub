@@ -1,0 +1,14 @@
+<template name = "hubUserSearchItem">
+    <div class = "row">
+        <div class="col-md-8">
+            {{displayName}}
+        </div>
+        <div class="col-md-4 text-right">
+            {{#if added}}
+                <button class="btn-link remove">Remove</button>
+            {{else}}
+                <button class="btn-link add">Add</button>
+            {{/if}}
+        </div>
+    </div>
+</template>

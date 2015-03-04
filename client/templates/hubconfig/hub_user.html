@@ -1,0 +1,14 @@
+<template name="hubUser">
+    <div class="col-md-12 hub">
+        <div class="hub-content">
+            <h3>{{displayName}}</h3>
+            <p class = "hub-footer">
+                {{name}} |
+                {{{emailAddress}}} |
+                {{#if userRemovable}}
+                    <a href="#" class="text-danger remove">Remove</a>
+                {{/if}}
+            </p>
+        </div>
+    </div>
+</template>

@@ -6,7 +6,7 @@
 JIRAConnector = (function JIRAConnector() {
 
     var private = {};
-    
+
     private.privateKeyData = Npm.require("fs").readFileSync(process.env.PWD + "/server/connectors/jira/config/rsa.pem", "utf8");
     private.oAuthModule = Meteor.npmRequire("oauth").OAuth;
     private.oAuth = new private.oAuthModule(
@@ -37,8 +37,26 @@ JIRAConnector = (function JIRAConnector() {
      * @param callback
      * @returns {*}
      */
-    private.oAuth.get = function(url, oauth_token, oauth_token_secret, callback) {
-        return this._performSecureRequest( oauth_token, oauth_token_secret, "GET", url, null, "", "application/json", callback );
+    private.oAuth.get = function(url, oauth_token, oauth_token_secret, content_type, callback) {
+        //return this._performSecureRequest( oauth_token, oauth_token_secret, "GET", url, null, "", "application/json", callback );
+
+        // The content_type parameter has been added.
+        // Older versions of the library had the callback in the place of content_type, so less parameters.
+        // To keep the coding style similar, i did not add the content_type as the last parameter. This could cause problems with backward compatibility.
+        // So I'm trying to find out if the content_type is really a string or if it is the callback.
+        // This makes content_type optional.
+        var requestCallback,
+            requestContentType;
+        if (callback === undefined) {
+            requestCallback = content_type;
+            requestContentType = null;
+        } else {
+            requestCallback = callback;
+            requestContentType = content_type;
+        }
+
+        return this._performSecureRequest( oauth_token, oauth_token_secret, "GET", url, null, "", requestContentType, requestCallback );
+
     };
 
     var module = {
@@ -57,7 +75,7 @@ JIRAConnector = (function JIRAConnector() {
             if (oauth.result.success === true) {
                 var jiraProvider = private.getProviderData();
                 if (jiraProvider) {
-                    Providers.update(jiraProvider._id, {requestToken: result.token});
+                    Providers.update(jiraProvider._id, {requestToken: oauth.result.token});
                 } else {
                     var provider = {
                         name: "jira",
@@ -115,6 +133,7 @@ JIRAConnector = (function JIRAConnector() {
                         private.getURLFor("URL_USER_SEARCH") + "?username=" + encodeURIComponent(username) + "&startAt=0&maxResults=10",
                         jiraProvider.accessToken,
                         jiraProvider.secret,
+                        "application/json",
                         function (error, data) {
                             if (error) {
                                 done(null, {success: false});
@@ -130,7 +149,58 @@ JIRAConnector = (function JIRAConnector() {
                     success: false
                 }
             }
+        },
 
+        getUserFilters: function getUserFilters() {
+            var jiraProvider = private.getProviderData();
+            if (jiraProvider.accessToken !== "") {
+                var runMethod = Async.runSync(function (done) {
+                    private.oAuth.get(
+                        private.getURLFor("URL_FILTERS_FAVOURITE"),
+                        jiraProvider.accessToken,
+                        jiraProvider.secret,
+                        "application/json",
+                        function (error, data) {
+                            if (error) {
+                                done(null, {success: false});
+                            } else {
+                                done(null, {success: true, data: JSON.parse(data)});
+                            }
+                        }
+                    )
+                });
+                return runMethod.result;
+            } else {
+                return {
+                    success: false
+                }
+            }
+        },
+
+        getInfoAboutMyself: function getInfoAboutMyself() {
+            var jiraProvider = private.getProviderData();
+            if (jiraProvider.accessToken !== "") {
+                var runMethod = Async.runSync(function (done) {
+                    private.oAuth.get(
+                        private.getURLFor("URL_MYSELF"),
+                        jiraProvider.accessToken,
+                        jiraProvider.secret,
+                        "application/json",
+                        function (error, data) {
+                            if (error) {
+                                done(null, {success: false});
+                            } else {
+                                done(null, {success: true, data: JSON.parse(data)});
+                            }
+                        }
+                    )
+                });
+                return runMethod.result;
+            } else {
+                return {
+                    success: false
+                }
+            }
         }
     };
 

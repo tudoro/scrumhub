@@ -4,9 +4,9 @@
 Template.hubsListHeader.helpers({
     filterClass: function(filterType) {
         if (Session.get("hubFilter") === filterType || (Session.get("hubFilter") === undefined && filterType === "all"))
-            return "btn-primary";
+            return "active";
         else
-            return "btn-link";
+            return "";
     },
     hubsCount: function(filterType) {
         if (filterType === "mine")
@@ -22,8 +22,5 @@ Template.hubsListHeader.events({
     },
     "click .filter-mine": function() {
         Session.set("hubFilter", "mine");
-    },
-    "click .add-hub": function() {
-        Router.go("addHub");
     }
 });

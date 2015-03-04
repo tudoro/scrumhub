@@ -6,23 +6,24 @@ Template.hubItem.helpers({
     ownHub: function() {
         return this.owner === Meteor.userId();
     },
-    ownerUser: function() {
-        if (this.owner === Meteor.userId()) {
-            return "<a href = '#'>yourself</a>";
-        }
-        else {
-            return "<a href = '#'>" + this.ownerName + "</a>";
-        }
+    accessToHub: function() {
+        JiraUsers.findOne({key: jiraUser.key});
     },
     lastModifiedFormattedDate: function() {
         var date = new Date(this.lastModified);
         return date.toLocaleString();
-
+    },
+    canJoin: function() {
+        var jiraUserInHub = JiraUsers.findOne({meetupUser: Meteor.userId(), hubs: this._id});
+        if (jiraUserInHub !== undefined && typeof jiraUserInHub === "object") {
+            return true;
+        }
+        return false;
     }
 });
 Template.hubItem.events({
     "click .delete": function(e) {
         e.preventDefault();
-        Hubs.remove(this._id);
+        Meteor.call("hubRemove", this);
     }
 });

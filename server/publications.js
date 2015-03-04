@@ -31,3 +31,11 @@ Meteor.publish("providers", function() {
     }
     return [];
 });
+
+Meteor.publish("jiraUsers", function() {
+    if (this.userId) {
+        var jiraUsers = JiraUsers.find();
+        return jiraUsers;
+    }
+    return [];
+});
