@@ -1,0 +1,10 @@
+<template name="hubActivityDetails">
+    <h4>Worked on in the last 3 days</h4>
+    {{#each activeWorkedOnIssues}}
+        {{> hubActivityIssue}}
+    {{/each}}
+    <h4>Working on now</h4>
+    {{#each currentlyWorkingOnIssues}}
+        {{> hubActivityIssue}}
+    {{/each}}
+</template>

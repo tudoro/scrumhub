@@ -201,6 +201,39 @@ JIRAConnector = (function JIRAConnector() {
                     success: false
                 }
             }
+        },
+
+        getIssuesByJQL: function(jql) {
+            var jiraProvider = private.getProviderData();
+            if (jiraProvider.accessToken !== "") {
+                var postBody = {
+                    jql: jql,
+                    startAt:0,
+                    maxResults: 100,
+                    expand: "comments,renderedFields"
+                };
+                var runMethod = Async.runSync(function (done) {
+                    private.oAuth.get(
+                        private.getURLFor("URL_JQL_SEARCH") + "?jql="+encodeURIComponent(jql)+"&startAt=0&maxResults=100&fields=description,comments&expand=renderedFields",
+                        jiraProvider.accessToken,
+                        jiraProvider.secret,
+                        //JSON.stringify(postBody),
+                        "application/json",
+                        function (error, data) {
+                            if (error) {
+                                done(null, {success: false});
+                            } else {
+                                done(null, {success: true, data: JSON.parse(data)});
+                            }
+                        }
+                    )
+                });
+                return runMethod.result;
+            } else {
+                return {
+                    success: false
+                }
+            }
         }
     };
 
