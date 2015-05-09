@@ -1,0 +1,12 @@
+<template name="hubNotes">
+    <div class="row">
+        {{> addHubNote this}}
+    </div>
+    <div class="row">
+        {{#each notes}}
+            <div class="col-md-12">
+                {{> hubNote}}
+            </div>
+        {{/each}}
+    </div>
+</template>

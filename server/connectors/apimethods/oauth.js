@@ -23,6 +23,16 @@ Meteor.methods({
     finishOAuth: function(oAuthVerifier) {
         if (Meteor.user()) {
             var result = JIRAConnector.getOAuthAccessToken(oAuthVerifier);
+            if (Meteor.isServer) {
+                var jiraUser = JIRAConnector.getInfoAboutMyself().data;
+                var existingJiraUser = JiraUsers.findOne({key: jiraUser.key});
+                if (!existingJiraUser) {
+                    var newJiraUser = _.extend(jiraUser, {
+                        meetupUser: Meteor.userId()
+                    });
+                    JiraUsers.insert(newJiraUser);
+                }
+            }
             return result.success;
         }
     }

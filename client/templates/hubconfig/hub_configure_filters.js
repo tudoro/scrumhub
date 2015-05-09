@@ -6,12 +6,12 @@ Template.hubConfigureFilters.events({
     "click .filter": function(ev, tplInstance) {
         ev.preventDefault();
         var self = this;
-        Meteor.call("addFilterToHub", tplInstance.data.hub, this, function(){
+        Meteor.call("addFilterToHub", tplInstance.data.hub, this, function() {
             var newFilters = _.map(Session.get("hubConfigureFilters_filters"), function(filter) {
                 var returnedFilter = filter;
-                returnedFilter.selectedInHub = false;
+                //returnedFilter.selectedInHub = false;
                 if (filter.id === self.id) {
-                    returnedFilter.selectedInHub = true;
+                    returnedFilter.selectedInHub = !self.selectedInHub;
                 }
                 return returnedFilter;
             });
@@ -33,13 +33,17 @@ Template.hubConfigureFilters.rendered = function() {
     var self = this;
     Meteor.call("apimethods_getUserFilters", function(error, result) {
         if (!error) {
-            var filters = _.map(result.data, function(filter) {
-                var returnedFilter = filter;
-                returnedFilter.selectedInHub = false;
-                if (self.data.hub.filter && filter.id === self.data.hub.filter.id) {
-                    returnedFilter.selectedInHub = true;
+            var filters = result.data;
+            _.each(filters, function(filter, index) {
+                filters[index].selectedInHub = false;
+                if (self.data) {
+                    for (var count = 0; count < self.data.hub.filters.length; count++) {
+                        if (self.data.hub.filters[count].id === filter.id) {
+                            filters[index].selectedInHub = true;
+                            break;
+                        }
+                    }
                 }
-                return returnedFilter;
             });
             Session.set("hubConfigureFilters_filters", filters);
         }

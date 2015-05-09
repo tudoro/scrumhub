@@ -5,20 +5,6 @@
 Meteor.publish("hubs", function() {
     if (this.userId) {
         var allHubs = Hubs.find();
-        //allHubs.forEach(function(hub) {
-        //    var ownerName = "unknown";
-        //    if (hub.owner !== undefined) {
-        //        var owner = Meteor.users.find(hub.owner);
-        //        if (owner) {
-        //            ownerName = owner.name;
-        //        }
-        //    }
-        //    _.extend(hub, {
-        //        ownerName: ownerName
-        //    });
-        //
-        //});
-        //console.log(allHubs);
         return allHubs;
     }
     return [];
@@ -36,6 +22,13 @@ Meteor.publish("jiraUsers", function() {
     if (this.userId) {
         var jiraUsers = JiraUsers.find();
         return jiraUsers;
+    }
+    return [];
+});
+
+Meteor.publish("notes", function() {
+    if (this.userId) {
+        return Notes.find({userId: this.userId});
     }
     return [];
 });

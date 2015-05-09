@@ -3,19 +3,17 @@
         <div class="hub-content">
             <form class="form">
                 <div class="form-group {{errorClass 'name'}}">
-                    <!--<label class="control-label" for="url">URL</label>-->
                     <div class="controls">
                         <input name="name" id="name" type="text" value="" placeholder="Hub name" class="form-control"/>
                         <span class="help-block">{{errorMessage 'name'}}</span>
                     </div>
                 </div>
                 <div class="form-group">
-                    <!--<label class="control-label" for="title">Title</label>-->
                     <div class="controls">
                         <input name="description" id="description" type="text" value="" placeholder="Description" class="form-control"/>
                     </div>
                 </div>
-                <input type="submit" value="Submit" class="btn-sm btn-primary create-hub"/>
+                <input type="submit" value="Add hub" class="btn-sm btn-primary create-hub"/>
                 <button type="button" class="btn-sm btn-link cancel-create-hub">Cancel</button>
             </form>
         </div>
