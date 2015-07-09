@@ -23,7 +23,7 @@ Meteor.methods({
     finishOAuth: function(oAuthVerifier) {
         if (Meteor.user()) {
             var result = JIRAConnector.getOAuthAccessToken(oAuthVerifier);
-            if (Meteor.isServer) {
+            if (Meteor.isServer && JIRAConnectorConfig.INDIVIDUAL_OAUTH_CONNECTIONS === true) {
                 var jiraUser = JIRAConnector.getInfoAboutMyself().data;
                 var existingJiraUser = JiraUsers.findOne({key: jiraUser.key});
                 if (!existingJiraUser) {

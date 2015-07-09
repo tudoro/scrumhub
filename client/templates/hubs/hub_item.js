@@ -14,6 +14,16 @@ Template.hubItem.helpers({
         return date.toLocaleString();
     },
     canJoin: function() {
+        if (JIRAConnectorConfig.INDIVIDUAL_OAUTH_CONNECTIONS === true) {
+            var jiraUserInHub = JiraUsers.findOne({meetupUser: Meteor.userId(), hubs: this._id});
+            if (jiraUserInHub !== undefined && typeof jiraUserInHub === "object") {
+                return true;
+            }
+            return false;
+        }
+        return true;
+    },
+    canCreateNotes: function() {
         var jiraUserInHub = JiraUsers.findOne({meetupUser: Meteor.userId(), hubs: this._id});
         if (jiraUserInHub !== undefined && typeof jiraUserInHub === "object") {
             return true;

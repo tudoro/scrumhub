@@ -4,7 +4,7 @@
 
 Template.hubUser.helpers({
     userRemovable: function () {
-        if (this.meetupUser !== Meteor.userId())
+        if (this.meetupUser !== Meteor.userId() || JIRAConnectorConfig.INDIVIDUAL_OAUTH_CONNECTIONS !== true)
             return true;
         return false;
     }

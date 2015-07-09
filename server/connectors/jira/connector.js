@@ -19,7 +19,10 @@ JIRAConnector = (function JIRAConnector() {
         "RSA-SHA1",
         null);
     private.getProviderData = function getProviderData() {
-        return Providers.findOne({user: Meteor.userId(), name: "jira"});
+        if (JIRAConnectorConfig.INDIVIDUAL_OAUTH_CONNECTIONS === true) {
+            return Providers.findOne({user: Meteor.userId(), name: "jira"});
+        }
+        return Providers.findOne({name: "jira"});
     };
     private.getURLFor = function getURLFor(resource) {
         return JIRAConnectorConfig.URL_BASE + JIRAConnectorConfig[resource];

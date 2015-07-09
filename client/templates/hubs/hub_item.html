@@ -7,6 +7,8 @@
                 Last activity on {{lastModifiedFormattedDate}} |
                 {{#if canJoin}}
                     <a href="{{pathFor 'hubActivity'}}">Join</a> |
+                {{/if}}
+                {{#if canCreateNotes}}
                     <a href="{{pathFor 'hubNotes'}}">Notes</a> |
                 {{/if}}
                 {{#if ownHub}}
